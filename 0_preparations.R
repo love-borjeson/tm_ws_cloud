@@ -1,5 +1,5 @@
 #clean slate...:
-rm(list = ls())
+rm(list = ls()) #Ba skämta lite föfan
 
 #library(rstudioapi)
 #setwd(dirname(rstudioapi::callFun("getActiveDocumentContext")$path)) #won't take '????' etcetera in your filepath.

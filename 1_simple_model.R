@@ -1,4 +1,4 @@
-#Start the workshop plopp2345
+#Start the workshop
 
 #1. Save project for future use.
 #Save temporary project by clicking "Save a Permanent Copy" on the top banner.

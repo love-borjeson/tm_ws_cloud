@@ -29,25 +29,6 @@ That's it.
 
 **Option 2. Run in your local IDE**
 
-**Preparations** IMPORTANT: DO THIS PRIOR TO THE WORKSHOP
+Switch to this repo: https://github.com/love-borjeson/tm_ws/
 
-It is usually pretty straight forward to complete the preparatory steps below. If you still encounter problems, consult your IT-support at your department. You can also try googling: if you get an error message, try pasting it into your browser.
-
-**Install R and RStudio**
-
-Install R, from here: https://cran.r-project.org/
-
-Install RStudio, from here https://rstudio.com/products/rstudio/ Select *RStudio Desktop Open Scource Edition*.
-
-**Get data and scripts, install necessary packages**
-
-Clone or download this repo.
-
-Under the "Session" menu in RStudio, choose "Set Working Directory" and tell R where you have put your workshop files.
-
-Run the preparation script in R/RStudio named "0_preparations.R"
-
-**Now, get cracking!**
-
-Start the workshop by executing from "1_simple_model.R"
 

@@ -16,7 +16,6 @@
 *.Ruserdata
 *.Rhistory
 *.udpipe
-*.Rproj
 
 # Packages #
 ############

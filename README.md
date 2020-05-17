@@ -27,7 +27,7 @@ Open "1_simple_model.R" by the time for the workshop to start.
 
 That's it.
 
-**Option 2. Run in your local IDE**
+**Option 2. Run in your local IDE** (full user control and functionality)
 
 Switch to this repo: https://github.com/love-borjeson/tm_ws/
 

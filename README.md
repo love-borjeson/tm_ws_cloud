@@ -19,11 +19,7 @@ You can take part in the workshop in two ways, in the cloud or locally:
 
 Get an account for free, here: https://rstudio.cloud
 
-Navigate to the project, here: https://rstudio.cloud/project/1285007
-
-In the bottom right workspace, open the "Files" tab (i.e. NOT the ol' "File" menu at the top).
-
-Open "1_simple_model.R" by the time for the workshop to start.
+By the time of the wokshop, navigate to the project, here: https://rstudio.cloud/project/1285007
 
 That's it.
 

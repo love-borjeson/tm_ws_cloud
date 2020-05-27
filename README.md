@@ -1,7 +1,7 @@
 1. [Topic Modeling in R](#intro)
 2. [Learning and Modeling Philosophy](#learning)
 3. [Preparations](#preparations)
-4. [Preparations](#licensecontact)
+4. [License and Contact](#licensecontact)
 
 # Topic Modeling in R <a name="intro"></a>
 Topic modeling workshop in R, data and scripts. The workshop goes through *topic modeling*; (tweaking) the *Gibbs sampler*; using and editing a *stoplist*; linguistically inform the model using *Part-of-Speech*, *Lemmatization* and *key-words*; finding the appropriate *number of topics* (hello K!); and, finally, *exporting model results* to the extra-R world (if there is such a world). Bonus scripts (6-7) include code to build and app that will let you *interact with the model and the original data* at the same time and some *eye-candy* if you have the need to impress someone with your results.
@@ -30,7 +30,7 @@ That's it.
 
 Switch to this repo: https://github.com/love-borjeson/tm_ws/
 
-# License and Contact <a name="licensecontact"></a>
+## License and Contact <a name="licensecontact"></a>
 
 All material is unlicensed, i.e. donated to the public domain. For R, Rstudio and packages, additional licenses may apply. Please feel free to give credit where credits due.
 

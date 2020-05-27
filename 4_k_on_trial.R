@@ -72,12 +72,12 @@ controlGibbs <- list(seed = 5683, #hrm?
                      burnin = 200,
                      iter = 500,
                      delta = 0.15) #with a more dense dtm (resulting from our linguistic pre-processing),
-                     # topics will be very specific,
-                     # almost document-specific (especially for a small corpus).
-                     # We can counter this effect by increasing alpha and/or delta (i.e. beta) slightly.
-                     # Are we then rigging the below tests? In some sense, yes.
-                     # i.e. what we "objectively" find as the appropriate K (no of topics)
-                     # is partly the result of how we tweak delta. 
+# topics will be very specific,
+# almost document-specific (especially for a small corpus).
+# We can counter this effect by increasing alpha and/or delta (i.e. beta) slightly.
+# Are we then rigging the below tests? In some sense, yes.
+# i.e. what we "objectively" find as the appropriate K (no of topics)
+# is partly the result of how we tweak delta. 
 
 #library(parallel) #If you run this locally, un-comment this and make the suggetsted changes below at "mc.cores"
 
@@ -228,9 +228,8 @@ p
 
 ggplotly(p)
 #So here too, perplexity measures disagrees with the rest of the pack...
-#Nonetheless: Should we keep looking for K, it is between 8 and 120 we should look.
+#Nonetheless: Should we keep looking for K, it is between 80 and 160 we should look.
+#I.e. not much of a guidence...
 
 GMY <- "MYA"
 GMY 
-
-

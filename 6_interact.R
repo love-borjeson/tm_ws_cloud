@@ -6,6 +6,9 @@ rm(list = ls())
 #We will create an app to interact with out topic model via two outputs,
 #topicDocProbabilities (gamma) and topic summary. We will enrich the latter a bit.
 
+#The app can also be found here:
+#https://love-borjeson.shinyapps.io/interact2/
+
 topicDocProbabilities <- readRDS("topicDocProbabilities.rds")
 head(topicDocProbabilities)
 topicDocProbabilities[, 2:101] <- round(topicDocProbabilities[, 2:101], 4) #We don't need the full format...
@@ -120,7 +123,6 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
-  # sorted columns are colored now because CSS are attached to them
   output$tbl <- DT::renderDataTable({
     DT::datatable(topicDocProbabilities[, 1:103],
                   extensions = c('FixedColumns'),

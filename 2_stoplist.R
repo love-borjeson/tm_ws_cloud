@@ -125,7 +125,7 @@ dtm2 <- DocumentTermMatrix(corp2, control=list(bounds = list(global = c(5,Inf)),
   #else x[termIndex, ]
 #}
 
-#And then aplly function directly on th dtm
+#And then aplly function directly on the dtm
 #dtm2 <- removeCommonTerms(dtm, .8)
 
 #Let's get back on track

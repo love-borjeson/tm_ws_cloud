@@ -6,6 +6,8 @@
 
 #2.Execute commands.
 #To execute, place the cursor at the top and press ctrl+enter.
+#In the cloud-version of R/RStudio, it's recommended to let R finish working before starting the next command.
+#A red stop sign in the console-window (below) will show you if R is busy.
 #You can now ctrl-enter your way through script 1-7.
 #It is recommended to run the scripts in order,
 #but every script can be run independently. Buckle-up and enjoy!

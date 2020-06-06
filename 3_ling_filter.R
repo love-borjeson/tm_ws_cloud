@@ -73,19 +73,21 @@ dtmKW <- document_term_matrix(x = dtf) #Save as dtm
 dtmKW <- dtm_remove_lowfreq(dtmKW, minfreq = 3) #This is the direct method to trim the dtm.
 saveRDS(dtmKW, file = "dtmKW.rds")
 
-#A more dynamic approach is to use tf-idf, see below.
+###############################For reference!
+#A more dynamic approach is to use tf-idf, see below (just un-comment).
 #TF-IDF =
 #term frequency- (log scaled) inverse document frequency,
 #can be used to filter away very infrequent words AND words frequent in many docs
 #https://en.wikipedia.org/wiki/Tf%E2%80%93idf#Inverse_document_frequency
-dgCM_dtm <- document_term_matrix(x = dtf) #make a non-zero dtm
-dtm_tfidfVector <- as.data.frame(dtm_tfidf(dgCM_dtm)) #check out the vector
-View(dtm_tfidfVector)
-dgCM_dtm <- dtm_remove_tfidf(dgCM_dtm, cutoff=2) #Decide cut-off after studying the tfidf-vector.
+#dgCM_dtm <- document_term_matrix(x = dtf) #make a non-zero dtm
+#dtm_tfidfVector <- as.data.frame(dtm_tfidf(dgCM_dtm)) #check out the vector
+#View(dtm_tfidfVector)
+#dgCM_dtm <- dtm_remove_tfidf(dgCM_dtm, cutoff=2) #Decide cut-off after studying the tfidf-vector.
 
 #But let's for now, use the dtmKW
-rm(dgCM_dtm)
-rm(dtm_tfidfVector) #Cleaning up a bit-
+#rm(dgCM_dtm)
+#rm(dtm_tfidfVector) #Cleaning up a bit-
+################################
 
 #remodel
 library(topicmodels)

@@ -53,7 +53,7 @@ topjokes_w = topjokes_w[-1, ]
 topicTotal <- as.data.frame(colSums(topicDocProbabilities[, c(2:101)]))
 topicTotal$topic <- seq.int(nrow(topicTotal))
 topicTotal$topic <- sprintf("%03i", topicTotal$topic) #to be able to match this to previous results further down the line
-topicTotal$topic <- as.factor(topicTotal$topic) #Make topic no a factor
+topicTotal$topic <- as.factor(topicTotal$topic) #Make topic not a factor
 topicTotal$temp<- factor("Topic_") #create a new column/var filled with the word Topic_
 topicTotal$topic <- paste(topicTotal$temp,topicTotal$topic) #Paste together
 topicTotal$topic <- gsub("[[:space:]]", "", topicTotal$topic) #Take away white space
@@ -104,19 +104,19 @@ ui <- fluidPage(
 )
 
 #The server function
-#####################################################################
-#HOW TO CREATE A VECTOR WITH TOPIC SUMMARY TO DISPLAY ON MOUSE-OVER:
-vec <- as.data.frame(terms(modelBig100 ,10)) #Summarize.
-vect <- as.data.frame(t(vec)) #Transpose
-library(tidyr)
-vect2 <- vect %>% unite("z", sep=',', V1:V10, remove = T) #Conflate words within each topic
-vect2$z <- paste0(" '", vect2$z) #Insert ' in beginning
-vect2$z <- paste0(vect2$z, "'") #... and in the end
-vect2 <- as.data.frame(t(vect2)) #Transpose
-vect2 <- vect2 %>% unite("z", sep=',', c(1:100), remove = T) #Conflate between topics
-print(vect2) #Copy the print output from the console and paste it into the Javascript below after "callback = JS("var tips = ['Row Names', 'doc',"
+###############################For reference!
+#HOW TO CREATE A VECTOR WITH TOPIC SUMMARY TO DISPLAY ON MOUSE-OVER (un-comment below):
+#vec <- as.data.frame(terms(modelBig100 ,10)) #Summarize.
+#vect <- as.data.frame(t(vec)) #Transpose
+#library(tidyr)
+#vect2 <- vect %>% unite("z", sep=',', V1:V10, remove = T) #Conflate words within each topic
+#vect2$z <- paste0(" '", vect2$z) #Insert ' in beginning
+#vect2$z <- paste0(vect2$z, "'") #... and in the end
+#vect2 <- as.data.frame(t(vect2)) #Transpose
+#vect2 <- vect2 %>% unite("z", sep=',', c(1:100), remove = T) #Conflate between topics
+#print(vect2) #Copy the print output from the console and paste it into the Javascript below after "callback = JS("var tips = ['Row Names', 'doc',"
 #This is already done below (at your service, allways...)
-#####################################################################
+###############################
 
 server <- function(input, output) {
   
@@ -154,11 +154,10 @@ for (var i = 0; i < tips.length; i++) {
   
   output$tbl2 <- DT::renderDataTable({
     DT::datatable(topjokes_w,
-                  extensions = c('FixedColumns', "Buttons"),
+                  extensions = c('FixedColumns'),
                   options = list(
                     pageLength = 25,
                     dom = 'Bfrtip',
-                    buttons = c('csv', 'excel', 'pdf', 'print'),
                     scrollX = TRUE,
                     fixedColumns = list(leftColumns = 1),
                     fixedHeader = TRUE,

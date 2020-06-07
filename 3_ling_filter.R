@@ -12,7 +12,7 @@ Eng_model <- udpipe_download_model(language = "english") #Just specify the langu
 Eng_model <- udpipe_load_model(Eng_model$file_model) #and load to be used in this session
 
 testtext <- read.csv("SmallTest.csv", stringsAsFactors=FALSE)
-testtext
+#testtext
 
 z <- udpipe_annotate(Eng_model, x = testtext$text, doc_id = testtext$doc_id)
 z <- as.data.frame(z)
@@ -104,6 +104,21 @@ terms(model4,10) #Looks ok.
 dtmKW <- dtm_remove_terms(dtmKW, terms = c("wtfe")) #This is what we need to develop.
 #remodel.....
 # and then visualize. If you do, you will notice that the LDA is symmetric with this approach as well.
+
+topicmodels2LDAvis <- function(x, ...){
+  post <- topicmodels::posterior(x)
+  if (ncol(post[["topics"]]) < 3) stop("The model must contain > 2 topics")
+  mat <- x@wordassignments
+  LDAvis::createJSON(
+    phi = post[["terms"]], 
+    theta = post[["topics"]],
+    vocab = colnames(post[["terms"]]),
+    doc.length = slam::row_sums(mat, na.rm = TRUE),
+    term.frequency = slam::col_sums(mat, na.rm = TRUE)
+  )
+}
+serVis(topicmodels2LDAvis(model4))
+servr::daemon_stop(1) # to stop the server 
 
 #But what about K?
 

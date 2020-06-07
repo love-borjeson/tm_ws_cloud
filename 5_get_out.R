@@ -47,10 +47,10 @@ head(topicDocProbabilities)
 saveRDS(topicDocProbabilities, file = "topicDocProbabilities.rds") #Save this.  
 
 #Export to csv:
-k <- 100 #For naming
-write.csv(topicModelSummary, file = paste("LDAGibbs",k,"Summary.csv"))
-write.csv(topicDocProbabilities, file = paste("LDAGibbs",k,"Gamma.csv"))
-write.csv(topicTermProbabilities, file = paste("LDAGibbs",k,"Beta.csv"))
+#k <- 100 #For naming
+#write.csv(topicModelSummary, file = paste("LDAGibbs",k,"Summary.csv"))
+#write.csv(topicDocProbabilities, file = paste("LDAGibbs",k,"Gamma.csv"))
+#write.csv(topicTermProbabilities, file = paste("LDAGibbs",k,"Beta.csv"))
 
 GMY <- "MYA"
 GMY

@@ -226,9 +226,7 @@ nrow(dtm2)
 model2 <- LDA(dtm2, k, method = "Gibbs", control = controlGibbs) #Model...
 terms(model2,10)#Summarize.
 
-#Visualize
-serVis(topicmodels2LDAvis(model2))
-servr::daemon_stop(1) # to stop the server 
+#Visualize as before...
 
 #But what about K?
 

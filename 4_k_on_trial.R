@@ -194,8 +194,9 @@ p <- ggplot(results_perplexity, aes(x = k, y = perplexity)) +
 
 p
 
-library(plotly)
-ggplotly(p) #The perplexity measure thus indicates a higher no of appropriate topics.
+#make it interactive..:
+#library(plotly)
+#ggplotly(p) #The perplexity measure thus indicates a higher no of appropriate topics.
 
 ###############################################################################
 ###############################################################################
@@ -226,6 +227,7 @@ p <- ggplot(results_KBIGperpl, aes(x = k, y = perplexity)) +
   labs(x = "Candidate number of topics", y = "Perplexity when fitting the trained model to the hold-out set")
 p
 
+#interactive..:
 ggplotly(p)
 #So here too, perplexity measures disagrees with the rest of the pack...
 #Nonetheless: Should we keep looking for K, it is between 80 and 160 we should look.

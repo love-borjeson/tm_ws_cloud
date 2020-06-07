@@ -37,7 +37,7 @@ install.packages("networkD3")
 install.packages("devtools") #first install devtools
 #then call devtools, point to the repository and get the package from github
 devtools::install_github("jeromefroe/circlepackeR") 
-devtools::install_github("d3treeR/d3treeR")
+#devtools::install_github("d3treeR/d3treeR") #obsolete?
 
 #Testload the packages
 library(tm)

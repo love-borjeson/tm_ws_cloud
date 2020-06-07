@@ -4,7 +4,11 @@
 4. [License and Contact](#licensecontact)
 
 # Topic Modeling in R <a name="intro"></a>
-Topic modeling workshop in R, data and scripts. The workshop goes through *topic modeling*; (tweaking) the *Gibbs sampler*; using and editing a *stoplist*; linguistically inform the model using *Part-of-Speech*, *Lemmatization* and *key-words*; finding the appropriate *number of topics* (hello K!); and, finally, *exporting model results* to the extra-R world (if there is such a world). Bonus scripts (6-7) include code to build and app that will let you *interact with the model and the original data* at the same time and some *eye-candy* if you have the need to impress someone with your results.
+Topic modeling workshop in R, data and scripts. 
+
+No prior R experience needed | Only lilliputian preparations
+
+The workshop goes through *topic modeling*; (tweaking) the *Gibbs sampler*; using and editing a *stoplist*; linguistically inform the model using *Part-of-Speech*, *Lemmatization* and *key-words*; finding the appropriate *number of topics* (hello K!); and, finally, *exporting model results* to the extra-R world (if there is such a world). Bonus scripts (6-7) include code to build and app that will let you *interact with the model and the original data* at the same time and some *eye-candy* if you have the need to impress someone with your results.
 
 A very brief introduction to topic modeling can be found [here](https://docs.google.com/presentation/d/1UPmCKOCR35Bv7atY15pSILNm_HxR_t62IHMkmU-fKa8/edit?usp=sharing).
 

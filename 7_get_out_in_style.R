@@ -167,7 +167,7 @@ circlepackeR(jokesRtree, size = "beta", color_min = "hsl(188, 34%, 67%)", color_
 #TREEMAPS
 library(treemap)
 #devtools::install_github("d3treeR/d3treeR")
-library(d3treeR)
+#library(d3treeR) #We seem not to need d3treeR...
 library(RColorBrewer)
 
 kindofpretty2 <- c("#F0F0F0", "#D8E6DB", "#82807F", "#FCECE2", "#C5E5F0")

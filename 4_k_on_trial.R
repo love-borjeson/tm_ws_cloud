@@ -228,10 +228,11 @@ p <- ggplot(results_KBIGperpl, aes(x = k, y = perplexity)) +
 p
 
 #interactive..:
+library(plotly)
 ggplotly(p)
 #So here too, perplexity measures disagrees with the rest of the pack...
 #Nonetheless: Should we keep looking for K, it is between 80 and 160 we should look.
-#I.e. not much of a guidence...
+#I.e. not much of a guidance...
 
 GMY <- "MYA"
 GMY 

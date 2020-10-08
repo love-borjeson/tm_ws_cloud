@@ -33,7 +33,7 @@ rm(z)
 x <- readRDS("annotated_jokes.rds") #pre-annotated our joke sub-sample to save time...
 
 x$topic_level_id <- unique_identifier(x, fields = c("doc_id", "paragraph_id", "sentence_id"))
-
+View(x)
 #clean
 library(textclean)
 x$lemma <- strip(x$lemma, char.keep = c(), digit.remove = F,
@@ -118,7 +118,7 @@ topicmodels2LDAvis <- function(x, ...){
   )
 }
 serVis(topicmodels2LDAvis(model4))
-servr::daemon_stop(1) # to stop the server 
+#servr::daemon_stop(1) # to stop the server 
 
 #But what about K?
 

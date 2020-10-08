@@ -138,7 +138,7 @@ serVis(topicmodels2LDAvis(model1)) #call the function with the model (here, mode
 #Hiccup? You may need to install and load 'servr'.
 #Also, you may need to try reload or to allow pop-up windows for rstudio.cloud. 
 
-servr::daemon_stop(1) # to stop the server 
+#servr::daemon_stop(whatever no. is suggested) # to stop the server 
 
 GMY <- "MYA"
 GMY

@@ -43,6 +43,6 @@ Switch to this repo: https://github.com/love-borjeson/tm_ws/
 
 All material is unlicensed, i.e. donated to the public domain. For R, Rstudio and packages, additional licenses may apply. Please feel free to give credit where credits due.
 
-Responsible for this workshop: [Love Börjeson](love.borjeson@kb.se), Director of KBLab at the National Library of Sweden.
+Responsible for this workshop: [Love Börjeson](love.borjeson@kb.se), Director of KBLab at the National Library of Sweden and [Chris Haffenden](chris.haffenden@kb.se), Research Coordinator at KBLab at the National Library of Sweden.
 
 

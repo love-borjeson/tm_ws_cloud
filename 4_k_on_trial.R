@@ -68,7 +68,8 @@ dtmKW <- readRDS("dtmKW.rds")
 candidate_k <- c(2, 3, 2:60 * 2, 7:10 * 20) # a proper sampling of models with different no of K.
 candidate_k
 candidate_k <- c(2, 24, 60, 120) #for the purpose of this lab. Higher numbers add A LOT OF TIME.
-controlGibbs <- list(seed = 5683, #hrm?
+controlGibbs <- list(alpha = 50/candidate_k,
+                     seed = 5683, #hrm?
                      burnin = 200,
                      iter = 500,
                      delta = 0.15) #with a more dense dtm (resulting from our linguistic pre-processing),
@@ -133,6 +134,7 @@ dtmKW <- m3m(dtmKW, "dtm") #The below function needs a 2d dtm...
 library(doParallel)
 #ForEach is a different way to parallelize, since it does not split the data, but the processes.
 
+alpha = 50/candidate_k
 burnin = 200
 iter = 500
 keep = 50 
@@ -173,7 +175,7 @@ system.time({
       train_set <- dtmKW[splitfolds != i , ]
       valid_set <- dtmKW[splitfolds == i, ]
       fitted <- LDA(train_set, k = k, method = "Gibbs",
-                    control = list(burnin = burnin, iter = iter, keep = keep, delta = delta) )
+                    control = list(alpha = k/candidate_k, burnin = burnin, iter = iter, keep = keep, delta = delta) )
       results_1k[i,] <- c(k, perplexity(fitted, newdata = valid_set))
     }
     return(results_1k)

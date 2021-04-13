@@ -18,6 +18,7 @@ z <- udpipe_annotate(Eng_model, x = testtext$text, doc_id = testtext$doc_id)
 z <- as.data.frame(z)
 View(z)
 #Handles twitter better than Shakespeare, apparently.
+#Also, could you, and by that I mean me, say something about market vs market?
 rm(z)
 
 
@@ -42,8 +43,8 @@ x$lemma <- strip(x$lemma, char.keep = c(), digit.remove = F,
 keyw_rake2 <- keywords_rake(x, 
                             term = "lemma", group = c("sentence_id"),
                             relevant = x$upos %in% c("NOUN", "ADJ"),
-                            ngram_max = 3, n_min = 5) #Relevant: nouns and adjectives. Optioanlly, include all open classes
-                            #n_min may have to be increased when modelling on a larger corpus
+                            ngram_max = 3, n_min = 5) #Relevant: nouns and adjectives. Optionally, include all open classes
+                            #n_min may have to be increased when modeling on a larger corpus
 
 keyw_rake2 <- subset(keyw_rake2, ngram > 1) #only keep keywords if they are > 1 word.
 

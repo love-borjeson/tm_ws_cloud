@@ -12,8 +12,8 @@ library(data.table)  #The following three lines of codes are not strictly necess
 #within each subplot arrange terms depending on  their loading.
 # create dummy var 'ord' which reflects order when sorted alphabetically
 topjokesDT <- setDT(topjokes) #make it a datatable.
-topjokesDT[, ord := sprintf("%03i", frank(topjokesDT, topic, beta, ties.method = "first"))]
-#we need three digits since nr>100 (818).
+topjokesDT[, ord := sprintf("%02i", frank(topjokesDT, topic, beta, ties.method = "first"))]
+#we need two digits since nr>100 (818).
 head(topjokesDT)
 
 #and then plot
@@ -30,7 +30,7 @@ ggplot(topjokesDT, aes(x = ord, y = beta, fill = factor(topic))) +
   # replace x-axis title
   xlab("terms") +
   coord_flip() +
-  ggtitle("Top 5 words with loadings per topic 1-100") + 
+  ggtitle("Top 10 words with loadings per topic 1-29") + 
   #add some colors...
   theme(plot.background = element_rect(fill = c("#FAF1D2")),
         panel.background = element_rect(fill = c("#CFE8DB"), colour = "lightblue", size = 0.5, linetype = "solid"),
@@ -39,7 +39,7 @@ ggplot(topjokesDT, aes(x = ord, y = beta, fill = factor(topic))) +
   theme(text = element_text(size=7)) +
   theme(legend.position = "none")
 
-#Save as pdf in 8.27 (A4 width) * 24 inch to get something scrollable.
+#Save as pdf in 8.27 (A4 width) * x inch to get something scrollable.
 
 rm(list = ls()) #start over
 
@@ -61,7 +61,7 @@ topjokes <- readRDS("topjokes.rds")
 #via various visualizations.
 
 #JSD
-jsd1 <- as.matrix(topicDocProbabilities[ ,2:101]) #Subset columns with topic loadings
+jsd1 <- as.matrix(topicDocProbabilities[ ,2:30]) #Subset columns with topic loadings
 library(textmineR)
 jsd1 <- CalcJSDivergence(jsd1, y = NULL, by_rows = FALSE)
 
@@ -91,7 +91,7 @@ plot(1:25, wss, type="b", xlab="Number of Clusters", #match i
      ylab="Within groups sum of squares", main="Within cluster sum of squares (WCSS)")
 
 set.seed(427)
-fit_kmeans <- kmeans(fitdf, 5) # perhaps 7 is better...
+fit_kmeans <- kmeans(fitdf, 3) # perhaps 5 or 7 is better...
 clusters <- as.data.frame(as.factor(fit_kmeans$cluster))
 clusters <- cbind(rownames(clusters),
                   data.frame(clusters,

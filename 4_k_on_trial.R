@@ -23,7 +23,7 @@ dtmKW <- readRDS("dtmKW.rds")
 #(alpha, beta, etc.) and then manipulate K to get the best model.
 #We'll look into 3 methods to do it, and since doing this is computationally expensive,
 #we'll do it in parallel.
-#N0, not in the cloud. But the necessary code for parallelization is included, nonetheless.
+#N0, not in the cloud. But the necessary code for parallellization is included, nonetheless.
 
 #Once you've started the iterations on a fairly large dataset (>50')
 #to find K for a good model, it's a good time have a cup of coffee.
@@ -68,11 +68,11 @@ dtmKW <- readRDS("dtmKW.rds")
 candidate_k <- c(2, 3, 2:60 * 2, 7:10 * 20) # a proper sampling of models with different no of K.
 candidate_k
 candidate_k <- c(2, 24, 60, 120) #for the purpose of this lab. Higher numbers add A LOT OF TIME.
-controlGibbs <- list(alpha = 50/candidate_k,
+controlGibbs <- list(alpha = 50/candidate_k, #Here we need alpha to be dynamic and vary with the size of K
                      seed = 5683, #hrm?
                      burnin = 200,
                      iter = 500,
-                     delta = 0.15) #with a more dense dtm (resulting from our linguistic pre-processing),
+                     delta = 0.1) #with a more dense dtm (resulting from our linguistic pre-processing),
 # topics will be very specific,
 # almost document-specific (especially for a small corpus).
 # We can counter this effect by increasing alpha and/or delta (i.e. beta) slightly.
@@ -134,11 +134,11 @@ dtmKW <- m3m(dtmKW, "dtm") #The below function needs a 2d dtm...
 library(doParallel)
 #ForEach is a different way to parallelize, since it does not split the data, but the processes.
 
-alpha = 50/candidate_k
+alpha = 50/candidate_k #Here we need alpha to be dynamic and vary with the size of K
 burnin = 200
 iter = 500
 keep = 50 
-delta = 0.15 #We need these stated individually, to call them inside the below function...
+delta = 0.1 #We need these stated individually, to call them inside the below function...
 
 n <- nrow(dtmKW) #We need this for splitting the sample
 
@@ -198,7 +198,7 @@ p
 
 #make it interactive..:
 #library(plotly)
-#ggplotly(p) #The perplexity measure thus indicates a higher no of appropriate topics.
+#ggplotly(p)
 
 ###############################################################################
 ###############################################################################
@@ -206,7 +206,7 @@ p
 #The above methods are global (valid for the model as a whole).
 #You could/should also have a look at coherence measures that are both global
 #and local (valid for single topics), 
-#readily applicable using 'textminer'.
+#readily applicable using the package 'textminer'.
 
 ###############################################################################
 ###############################################################################
@@ -214,27 +214,9 @@ p
 #"No," said the priest, "you don't need to accept everything as true, you only have to accept it as necessary."
 #"Depressing view," said K. "The lie made into the rule of the world." 
 
-
 #Let's find K for the whole 10K data set of jokes, and for many more models..
-results_KBIGldaT <- readRDS("results_KBIGldaT.rds") #pre-tested...
-results_KBIGperpl <- readRDS("results_KBIGperpl.rds") #to save time
-
-FindTopicsNumber_plot(results_KBIGldaT)
-
-p <- ggplot(results_KBIGperpl, aes(x = k, y = perplexity)) +
-  geom_point(pch = 21, size = 2, fill = I("orange")) +
-  geom_smooth(color=c("#753633"),size=0.5) +
-  ggtitle("3-fold cross-validation of LDA-model with Gibbs sampler on the 'jokes' dataset",
-          "Perplexity when fitting the trained model to the hold-out set.") +
-  labs(x = "Candidate number of topics", y = "Perplexity when fitting the trained model to the hold-out set")
-p
-
-#interactive..:
-library(plotly)
-ggplotly(p)
-#So here too, perplexity measures disagrees with the rest of the pack...
-#Nonetheless: Should we keep looking for K, it is between 80 and 160 we should look.
-#I.e. not much of a guidance...
+result_k <- readRDS("result_k.rds") #pre-tested...
+FindTopicsNumber_plot(result_k)
 
 GMY <- "MYA"
 GMY 

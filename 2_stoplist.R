@@ -77,7 +77,7 @@ View(dtmfq) #This is what we wanted to accomplish.
 #Trimming away the infrequent words is fairly easy and it's hard to get it completely wrong.
 #in the other end of the scale, one has to proceed with caution: frequent words,
 #especially **** after applying a standardized stoplist ****, are important, at least to the corpus.
-#Don't take away to much and iterate. That is why we want to carefully inspect the word fq.
+#Don't take away to much and iterate. This is why we want to carefully inspect the word fq.
 #In line with this argument, let's use the top words as a
 #curated extra stoplist for maximum control.
 
@@ -209,11 +209,11 @@ library(LDAvis)
 serVis(topicmodels2LDAvis(model2))
 #Notice how the size (and spread) of topics (in the MDS) is much more even than before.
 #We can now say that the model i symmetric, which is a good thing,
-#since there's not any implementation for an asymmetric LDA in R (know to me, at least)
+#since there's not any implementation for an asymmetric LDA in R (known to me, at least)
 #The symmetry is the result of dropping all to frequent words).
 #See if we can come up with 5-15 more words to remove, using LDAvis.
 
-LabStop <- c("wtfe") #..and put them in here. EACH PARTICIPANT OWE ME ONE WORD!!!!!
+LabStop <- c("word1", "word2") #..and put them in here. Suggestions, pls.
 #remove them
 corp2 <- tm_map(corp2, removeWords, LabStop)
 #recreate the dtm..

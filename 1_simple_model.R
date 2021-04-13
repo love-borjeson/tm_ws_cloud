@@ -30,11 +30,11 @@ str(text1)
 #Let's make it a factor, not a string..:
 text1$Column1.category <- as.factor(text1$Column1.category)
 
-set.seed(123)
-text1 <- text1[sample(nrow(text1), 1000), ] #We'll sample for the purpose of this lab.
-
 #Let's see how many levels there are of categories
 nlevels(text1$Column1.category) #we'll reuse this information later.
+
+set.seed(123)
+text1 <- text1[sample(nrow(text1), 1000), ] #We'll sample for the purpose of this lab.
 
 #A key to being able to use the topic model is to maintain the 1:1:1 relation
 #between the documents id in the original dataset, the corpus and in the so called document term matrix (dtm).

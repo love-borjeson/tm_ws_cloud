@@ -4,19 +4,19 @@ rm(list = ls())
 #setwd(dirname(rstudioapi::callFun("getActiveDocumentContext")$path))
 
 library(topicmodels)
-modelBig100<- readRDS("model_k100.rds") #This one we'll use'. 
+modelBig29 <- readRDS("model_lab_29.rds") #This one we'll use'. 
 #It is the model on the full jokes dataset, with K=80 based on the result we just inspected.
 
-terms(modelBig100 ,7) #Have a quick look
+terms(modelBig29 ,7) #Have a quick look
 #pretty ok, by a quick inspection. Albeit far from perfect.
 
 #Get stuff out of the model, three tables:
 #1. Model summary
-topicModelSummary <- as.data.frame(terms(modelBig100 ,15)) #Col = topics, cells = topterms(15)/topic
+topicModelSummary <- as.data.frame(terms(modelBig29 ,15)) #Col = topics, cells = topterms(15)/topic
 #2. Topic loadings per doc (gamma), i.e. the strength of the relations between respectiv topics and documents
-topicDocProbabilities <- as.data.frame(topicmodels::posterior(modelBig100)$topics) #Col = topics, rows = doc_id
+topicDocProbabilities <- as.data.frame(topicmodels::posterior(modelBig29)$topics) #Col = topics, rows = doc_id
 #3. Topic loadings per term (beta), i.e. the strength of the relations between respective topics and terms
-topicTermProbabilities <- as.data.frame(t(topicmodels::posterior(modelBig100)$terms))#Col = terms, rows = topics
+topicTermProbabilities <- as.data.frame(t(topicmodels::posterior(modelBig29)$terms))#Col = terms, rows = topics
 #These can be saved as csv and further analysed outside R. It is allowed.
 
 #Let's just enrich the gamma output table slightly first:
@@ -27,7 +27,7 @@ topicDocProbabilities <- cbind(rownames(topicDocProbabilities),
                                data.frame(topicDocProbabilities,
                                           row.names=NULL)) 
 
-top.topics <- as.data.frame(topics(modelBig100)) #top topics per doc
+top.topics <- as.data.frame(topics(modelBig29)) #top topics per doc
 
 #marry gamma with toptopics
 head(top.topics)
@@ -47,7 +47,7 @@ head(topicDocProbabilities)
 saveRDS(topicDocProbabilities, file = "topicDocProbabilities.rds") #Save this.  
 
 #Export to csv:
-#k <- 100 #For naming
+#k <- 29 #For naming
 #write.csv(topicModelSummary, file = paste("LDAGibbs",k,"Summary.csv"))
 #write.csv(topicDocProbabilities, file = paste("LDAGibbs",k,"Gamma.csv"))
 #write.csv(topicTermProbabilities, file = paste("LDAGibbs",k,"Beta.csv"))

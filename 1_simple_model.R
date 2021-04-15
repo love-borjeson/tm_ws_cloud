@@ -58,7 +58,7 @@ names(text1)[4] <- "title"
 text1 <- text1[c('doc_id', 'text', 'category', 'title')]
 colnames(text1) #ok, now we're good to go.
 
-saveRDS(text1, file = "smalltext1.rds") #for later use.
+#saveRDS(text1, file = "smalltext1.rds") #for later use.
 
 library(tm)
 #If you get this: Error: package or namespace load failed for ‘tm’

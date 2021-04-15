@@ -72,7 +72,7 @@ dtf$term <- gsub(" ", "", dtf$term, fixed = TRUE) #Whitestrips removal
 dtf <- dtf[!(is.na(dtf$term) | dtf$term==""), ] #remove empty rows
 dtmKW <- document_term_matrix(x = dtf) #Save as dtm
 dtmKW <- dtm_remove_lowfreq(dtmKW, minfreq = 3) #This is the direct method to trim the dtm.
-saveRDS(dtmKW, file = "dtmKW.rds")
+#saveRDS(dtmKW, file = "dtmKW.rds")
 
 ###############################For reference!
 #A more dynamic approach is to use tf-idf, see below (just un-comment).

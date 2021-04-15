@@ -18,7 +18,7 @@ z <- udpipe_annotate(Eng_model, x = testtext$text, doc_id = testtext$doc_id)
 z <- as.data.frame(z)
 View(z)
 #Handles twitter better than Shakespeare, apparently.
-#Also, could you, and by that I mean me, say something about market vs market?
+#Also, could you, and by that I mean me, say something about market vs market? I.e. different POS suggest entirely different meaning, even topically.
 rm(z)
 
 
@@ -102,7 +102,7 @@ controlGibbs <- list(seed = 5683, #what does this mean?
 model4 <- LDA(dtmKW, k, method = "Gibbs", control = controlGibbs) #Model...
 terms(model4,10) #Looks ok.
 #To fine-tune and add a (short) stoplist, use LDAvis as before.
-dtmKW <- dtm_remove_terms(dtmKW, terms = c("wtfe")) #This is what we need to develop.
+dtmKW <- dtm_remove_terms(dtmKW, terms = c("wordsssss")) #This is what we need to develop.
 #remodel.....
 # and then visualize. If you do, you will notice that the LDA is symmetric with this approach as well.
 

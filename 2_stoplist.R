@@ -167,7 +167,7 @@ controlGibbs <- list(#alpha is the numeric prior for document-topic multinomial 
                      #Also, 'delta', ususally referred to as 'beta'. Yes. Confusing.
                      #Decreasing 'Delta' ('beta'), e.g. from 0.1 to 0.001 will increase the granularity of the model.
                      #If topics appear to be to general and hard to distinguish, manipulating 'delta' (lowering its value) 
-                     #could be a strategy. If topcs are too particular, go the opposite way.
+                     #could be a strategy. If topics are too particular, go the opposite way.
                      iter = 2000, #>1000
                      burnin = 5, #>200, to throwaway the first inaccurate samples. Default set to 0.
                      thin = 2000) #Default = iter, that is to say we only need the stationary state of the last iteration.

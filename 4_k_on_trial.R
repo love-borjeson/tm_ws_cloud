@@ -38,7 +38,7 @@ dtmKW <- readRDS("dtmKW.rds")
 #Cao Juan, Xia Tian, Li Jintao, Zhang Yongdong, and Tang Sheng. 2009. A density-based method for adaptive lDA model selection.
 #Neurocomputing - 16th European Symposium on Artificial Neural Networks 2008 72, 7-9: 1775-1781.
 
-#"Cluster-like approach: ..."that the similarity will be as large as possible in the intra-
+#"Clustering-like approach: ..."that the similarity will be as large as possible in the intra-
 #cluster, but as small as possible between inter-clusters."
 
 #Transfer this idea to topics, maximizing (density-based) similarity intra-topics
@@ -217,6 +217,8 @@ p
 #Let's find K for the whole 10K data set of jokes, and for many more models..
 result_k <- readRDS("result_k.rds") #pre-tested...
 FindTopicsNumber_plot(result_k)
+
+#NB! Indexations is off in LDAVis app. Set lambda to 1 and compare words to match it the other app...
 
 GMY <- "MYA"
 GMY 

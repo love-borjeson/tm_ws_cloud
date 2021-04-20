@@ -213,7 +213,7 @@ serVis(topicmodels2LDAvis(model2))
 #The symmetry is the result of dropping all to frequent words).
 #See if we can come up with 5-15 more words to remove, using LDAvis.
 
-LabStop <- c("word1", "word2") #..and put them in here. Suggestions, pls.
+LabStop <- c("word1", "word2", "word3") #..and put them in here. Suggestions, pls.
 #remove them
 corp2 <- tm_map(corp2, removeWords, LabStop)
 #recreate the dtm..

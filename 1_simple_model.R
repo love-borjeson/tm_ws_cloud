@@ -142,7 +142,3 @@ serVis(topicmodels2LDAvis(model1)) #call the function with the model (here, mode
 
 GMY <- "MYA"
 GMY
-    
-
-
-

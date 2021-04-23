@@ -46,7 +46,8 @@ corp2 <- tm_map(corp2, stripWhitespace)
 #'Pneumonoultramicroscopicsilicovolcanoconiosis' is the longest word I (don't really) know in the English language.
 #It is 45 chr long. We can exclude it and longer words when creating the document term matrix.
 #Short words tend to clog up our model as well. Let's stay in the interval  of 3-45.
-dtm2 <- DocumentTermMatrix(corp2, control=list(wordLengths=c(3,45)))
+dtm2 <- DocumentTermMatrix(corp2, control=list(wordLengths=c(3,45))) #Here we can also weight/normalize the dtm if we wish,
+#by adding to the control list e.g. weighting = weightTf.
 
 #Now, to complicate things a bit, we want to inspect the dtm but only after converting it
 #to a sparse matrix (zeros not stored). We need slam (to deal with matrixes) and 

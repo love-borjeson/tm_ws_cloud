@@ -190,7 +190,7 @@ library(scales)
 p <- ggplot(results_perplexity, aes(x = k, y = perplexity)) +
   geom_point(pch = 21, size = 2, fill = I("orange")) +
   geom_line(color=c("#753633"),size=0.5) +
-  ggtitle("3-fold cross-validation of LDA-model with Gobbs sampler on the 'jokes' dataset",
+  ggtitle("3-fold cross-validation of LDA-model with Gibbs sampler on the 'jokes' dataset",
           "Perplexity when fitting the trained model to the hold-out set.") +
   labs(x = "Candidate number of topics", y = "Perplexity when fitting the trained model to the hold-out set")
 

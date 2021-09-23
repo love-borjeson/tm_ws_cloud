@@ -5,7 +5,7 @@ rm(list = ls())
 
 library(topicmodels)
 modelBig29 <- readRDS("model_lab_29.rds") #This one we'll use'. 
-#It is the model on the full jokes dataset, with K=80 based on the result we just inspected.
+#It is the model on the full jokes dataset, with K=29 based on the result we just inspected.
 
 terms(modelBig29 ,7) #Have a quick look
 #pretty ok, by a quick inspection. Albeit far from perfect.

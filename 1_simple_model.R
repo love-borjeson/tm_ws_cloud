@@ -134,10 +134,11 @@ topicmodels2LDAvis <- function(x, ...){
 #setting lambda = 0 ranks terms solely by their lift.
 
 #ok, got it. Now, just put as argument your LDA model:
+#library("servr")
 serVis(topicmodels2LDAvis(model1)) #call the function with the model (here, model1) as argument.
 #Hiccup? You may need to install and load 'servr'.
 #Also, you may need to try reload or to allow pop-up windows for rstudio.cloud. 
-
+#install.packages('servr')
 #servr::daemon_stop(whatever no. is suggested) # to stop the server 
 
 GMY <- "MYA"

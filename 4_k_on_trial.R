@@ -217,6 +217,12 @@ p
 #Let's find K for the whole 10K data set of jokes, and for many more models..
 result_k <- readRDS("result_k.rds") #pre-tested...
 FindTopicsNumber_plot(result_k)
+# compute ranks  
+result_k$rankG <- ave(-result_k$Griffiths2004,FUN=function(x) rank(x,ties.method="min"))
+result_k$rankCJ <- ave(result_k$CaoJuan2009,FUN=function(x) rank(x,ties.method="min"))
+# subset on the rank  
+subset(result_k,rankG==1)
+subset(result_k,rankCJ==1)
 
 #NB! Indexations is off in LDAVis app. Set lambda to 1 and compare words to match it the other app...
 

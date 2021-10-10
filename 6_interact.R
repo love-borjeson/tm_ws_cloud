@@ -6,9 +6,6 @@ rm(list = ls())
 #We will create an app to interact with out topic model via two outputs,
 #topicDocProbabilities (gamma) and topic summary. We will enrich the latter a bit.
 
-#The app can also be found here:
-#https://love-borjeson.shinyapps.io/interact2/
-
 topicDocProbabilities <- readRDS("topicDocProbabilities.rds")
 head(topicDocProbabilities)
 topicDocProbabilities[, 2:30] <- round(topicDocProbabilities[, 2:30], 4) #We don't need the full format...

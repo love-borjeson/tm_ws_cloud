@@ -32,13 +32,11 @@ topjokes <- jokesterms %>%
 #Let's improve the labels..:
 head(topjokes)
 str(topjokes)
-topjokes$topic <- sprintf("%02i", topjokes$topic) #to get the order of plots right
-topjokes$topic <- as.factor(topjokes$topic) #Make topic no a factor
-topjokes$temp <- factor("Topic_") #create a new column/var filled with the word Topic_
-topjokes$topic <- paste(topjokes$temp,topjokes$topic) #Paste together
-topjokes$topic <- gsub("[[:space:]]", "", topjokes$topic) #Take away white space
-topjokes <- select(topjokes, -temp) #Remove temp column.
-#All this just to get the word "Topic" into the topics column. Phew!
+
+# Pad topic numbers with 0s before: 01, 02, ..., 09, 10, 11, ... 29. 
+topjokes$topic <- stringr::str_pad(string = topjokes$topic, width = 2, side = "left", pad = 0)
+topjokes$topic <- paste0("Topic_", topjokes$topic)
+
 saveRDS(topjokes, file = "topjokes.rds") #We'll need this later
 head(topjokes)
 
@@ -52,15 +50,9 @@ head(topjokes_w)
 colnames(topjokes_w) <- as.character(unlist(topjokes_w[1,])) #make top row columnnames
 topjokes_w = topjokes_w[-1, ]
 
-#Get total topic loadings
+# Get total topic loadings
 topicTotal <- as.data.frame(colSums(topicDocProbabilities[, c(2:30)]))
-topicTotal$topic <- seq.int(nrow(topicTotal))
-topicTotal$topic <- sprintf("%02i", topicTotal$topic) #to be able to match this to previous results further down the line
-topicTotal$topic <- as.factor(topicTotal$topic) #Make topic not a factor
-topicTotal$temp<- factor("Topic_") #create a new column/var filled with the word Topic_
-topicTotal$topic <- paste(topicTotal$temp,topicTotal$topic) #Paste together
-topicTotal$topic <- gsub("[[:space:]]", "", topicTotal$topic) #Take away white space
-topicTotal <- select(topicTotal, -temp) #Remove temp column.
+topicTotal$topic <- colnames(topjokes_w) # get zero-padded topic names from previous step
 names(topicTotal)[1] <- "totaltopicloading"
 head(topicTotal)
 
@@ -78,7 +70,7 @@ head(topjokes_w)
 
 #Now we'll create the app...:
 library(shiny)
-library(DT)
+library(reactable)
 
 #The user interface
 ui <- fluidPage(
@@ -98,7 +90,7 @@ ui <- fluidPage(
     mainPanel(
       tabsetPanel(
         id = 'dataset',
-        tabPanel("Documents and topics", DT::dataTableOutput("tbl")),
+        tabPanel("Documents and topics", reactable::reactableOutput("tbl")),
         tabPanel("Top words per topic", DT::dataTableOutput("tbl2"))
       ),
       width = 30
@@ -106,55 +98,89 @@ ui <- fluidPage(
   )
 )
 
-#The server function
-###############################For reference!
-#HOW TO CREATE A VECTOR WITH TOPIC SUMMARY TO DISPLAY ON MOUSE-OVER (un-comment below):
-#vec <- as.data.frame(terms(modelBig29 ,10)) #Summarize.
-#vect <- as.data.frame(t(vec)) #Transpose
-#library(tidyr)
-#vect2 <- vect %>% unite("z", sep=',', V1:V10, remove = T) #Conflate words within each topic
-#vect2$z <- paste0(" '", vect2$z) #Insert ' in beginning
-#vect2$z <- paste0(vect2$z, "'") #... and in the end
-#vect2 <- as.data.frame(t(vect2)) #Transpose
-#vect2 <- vect2 %>% unite("z", sep=',', c(1:29), remove = T) #Conflate between topics
-#print(vect2) #Copy the print output from the console and paste it into the Javascript below after "callback = JS("var tips = ['Row Names', 'doc',"
-#This is already done below (at your service, allways...)
-###############################
+# Function to create tooltips when hovering over column headers of topic columns
+with_tooltip <- function(value, tooltip) {
+  tags$abbr(style = "text-decoration: underline; text-decoration-style: dotted; cursor: help",
+            title = tooltip, 
+            value)
+}
 
+# Extract the top 10 words as a concatenated string separated by commas
+top_words_tooltip <- topjokes %>%
+  group_by(topic) %>%
+  mutate(top_words = paste0(term, collapse=",")) %>%
+  slice(1)
+
+top_words <- as.list(top_words_tooltip$top_words)
+names(top_words) <- top_words_tooltip$topic
+
+n_topics <- topicDocProbabilities %>% 
+  select(starts_with("Topic")) %>%
+  ncol()
+
+# Empty list to hold column styling info
+topic_coldefs <- vector(mode = "list", length = n_topics)
+
+for (i in 1:n_topics){
+  # We insert tooltips and some styling (grey background color) for all topic columns
+  topic_coldefs[[i]] <- reactable::colDef(style = list(background = "rgba(0, 0, 0, 0.03)"), 
+                                          width = 120,
+                                          header = with_tooltip(value = names(top_words)[i],
+                                                                tooltip = top_words[[i]])
+  )
+}
+
+# Name the list of topics Topic_1, Topic_2, ..., etc.
+names(topic_coldefs) <- colnames(topicDocProbabilities[2:30])
+
+# Force some columns to be sticky when user scrolls in lateral direction
+other_coldefs <- list(
+  text = colDef(width = 600,
+                sticky = "right",
+                # Add a left border style to visually distinguish the sticky column
+                style = list(borderLeft = "1px solid #eee"),
+                headerStyle = list(borderLeft = "1px solid #eee")),
+  TopTopic = colDef(width = 130,
+                    sticky = "right",
+                    # Add a left border style to visually distinguish the sticky column
+                    style = list(borderLeft = "1px solid #eee"),
+                    headerStyle = list(borderLeft = "1px solid #eee")),
+  doc_id = colDef(sticky = "left",
+                  style = list(borderLeft = "1px solid #eee"),
+                  headerStyle = list(borderLeft = "1px solid #eee"))
+)
+
+coldefs <- c(other_coldefs, topic_coldefs) # combine lists with column definitions
+
+
+
+# Server that builds the tables
 server <- function(input, output) {
   
-  output$tbl <- DT::renderDataTable({
-    DT::datatable(topicDocProbabilities[, 1:32],
-                  extensions = c('FixedColumns'),
-                  callback = JS("var tips = ['Row Names', 'doc', 
-    'doctor,leg,eye,news,head,body,patient,hospital,heart,brain', 'jack,joe,harry,mary,george,dick,mike,sam,jim,tom', 'world,country,people,president,bill,year,bush,clinton,america,george_w_bush', 'car,officer,police,light,cop,driver,gun,window,truck,gas',
-    'friend,bar,mama,joke,beer,bartender,drink,tooth,time,bottle', 'blonde,brunette,blonde_,head,lightbulb,blond,wish,genies,chief,hair', 'seat,shotgun,plane,passenger,rule,bear,train,driver,way,trip', 'law,cow,state,street,time,city,texas,california,person,place',
-    'people,person,fart,one,group,time,movie,world,thing,food', 'side,foot,road,farmer,chicken,way,mile,town,sign,pig', 'wife,husband,year,child,couple,age,family,month,honey,love', 'boy,mother,teacher,father,son,mom,kid,dad,daughter,school',
-    'work,job,company,boss,time,office,party,part,employee,home', 'ball,hole,fire,fish,game,golf,water,team,boat,wood', 'night,room,momma,door,bed,morning,floor,hour,manager,hotel', 'hand,redneck,finger,shoe,clothes,shirt,pair,top,christmas,mirror',
-    'thing,life,way,time,one,lot,people,mind,idea,today', 'name,word,number,phone,letter,voice,picture,time,money,order', 'water,hour,table,dinner,coffee,food,restaurant,meal,egg,minute', 'week,priest,dollar,day,church,today,money,service,sister,rabbi',
-    'dog,house,john,bird,one,box,owner,day,neighbor,parrot', 'man,woman,guy,man_reply,money,king,wallet,ask,bit,men', 'question,student,answer,class,paper,point,book,roommate,minute,school', 'lady,knock,customer,store,sir,clerk,bob,shop,bill,bank',
-    'cat,lawyer,bathroom,toilet,human,judge,chair,door,mouth,shower', 'computer,window,virus,system,time,button,user,microsoft,error,drive', 'girl,baby,sex,time,difference,year_old,pants,date,face,ass',
-    'day,horse,tree,shit,animal,elephant,rabbit,monkey,kind,lion', 'god,chuck_norris,hell,heaven,jesus,lord,earth,st_peter,time,face'
-    ],
-    header = table.columns().header();
-for (var i = 0; i < tips.length; i++) {
-  $(header[i]).attr('title', tips[i]);
-}"), # The pasted topic-summary-vector above has to be diveded into seperate lines, 3-5... Or R won't read them.
-                  options = list(
-                    pageLength = 10,
-                    lengthMenu = c(5, 10, 15, 20),
-                    scrollX = TRUE,
-                    fixedColumns = list(leftColumns = 2, rightColumns = 2),
-                    fixedHeader = TRUE,
-                    autoWidth = TRUE,
-                    columnDefs = list(list(width = '600px', targets = c(32))
-                    )))%>% formatStyle(names(topicDocProbabilities[, 2:30]),
-                                       background = styleColorBar(range(topicDocProbabilities[, 2:30]), 'lightblue'),
-                                       backgroundSize = '98% 88%',
-                                       backgroundRepeat = 'no-repeat',
-                                       backgroundPosition = 'center')
-    
-  })
+  html <- function(x, inline = FALSE) {
+    container <- if (inline) htmltools::span else htmltools::div
+    container(style = "width:45%;", x)
+  }
+  
+  output$tbl <- renderReactable({
+    reactable(topicDocProbabilities[, 1:32], 
+              searchable = TRUE, 
+              showSortable = TRUE,
+              wrap = FALSE,
+              highlight = TRUE,
+              columns = coldefs,
+              # if there exists a comment, make row expandable
+              details = colDef(name = "",
+                               sticky = "left",
+                               details = function(index) {
+                                 if(nchar(topicDocProbabilities$text[index]) > 75) {
+                                   htmltools::tagList(
+                                     html(topicDocProbabilities$text[index])
+                                   )
+                                 } 
+                               })
+    )}
+  )
   
   output$tbl2 <- DT::renderDataTable({
     DT::datatable(topjokes_w,
@@ -170,6 +196,7 @@ for (var i = 0; i < tips.length; i++) {
   })
   
 }
+
 
 #Combine user interface and server function into an app:
 shinyApp(ui, server)
